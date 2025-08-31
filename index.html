@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional CRM</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background: #f5f5f7;
+        color: #1d1d1f;
+    }
+    header {
+        background: #fff;
+        padding: 20px 40px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    header h1 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.5rem;
+    }
+    header button {
+        background: #0071e3;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+    main {
+        padding: 40px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        flex: 1 1 300px;
+        min-width: 280px;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .card input, .card textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #d1d1d6;
+        font-size: 1rem;
+        font-family: 'Inter', sans-serif;
+    }
+    .card button {
+        background: #0071e3;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+    .contacts-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .contact-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px;
+        border-radius: 12px;
+        background: #f0f0f5;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .contact-item:hover {
+        background: #e0e0e5;
+    }
+    .contact-item span {
+        font-weight: 500;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>CRM Dashboard</h1>
+    <button onclick="showAddContact()">+ Add Contact</button>
+</header>
+
+<main>
+    <div class="card" id="contactFormCard" style="display:none;">
+        <h2>Add / Edit Contact</h2>
+        <input type="text" id="contactName" placeholder="Full Name">
+        <input type="email" id="contactEmail" placeholder="Email">
+        <textarea id="contactNotes" placeholder="Notes"></textarea>
+        <button onclick="saveContact()">Save Contact</button>
+        <button style="background:#aaa;margin-top:5px;" onclick="hideAddContact()">Cancel</button>
+    </div>
+
+    <div class="card">
+        <h2>Contacts</h2>
+        <div class="contacts-list" id="contactsList">
+            <!-- Contacts will populate here -->
+        </div>
+    </div>
+</main>
+
+<script>
+let editingIndex = null;
+
+function loadContacts() {
+    const contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
+    const list = document.getElementById('contactsList');
+    list.innerHTML = '';
+    contacts.forEach((c, i) => {
+        const item = document.createElement('div');
+        item.className = 'contact-item';
+        item.innerHTML = `<span>${c.name}</span> | <span>${c.email}</span>`;
+        item.onclick = () => editContact(i);
+        list.appendChild(item);
+    });
+}
+
+function showAddContact() {
+    document.getElementById('contactFormCard').style.display = 'flex';
+    document.getElementById('contactName').value = '';
+    document.getElementById('contactEmail').value = '';
+    document.getElementById('contactNotes').value = '';
+    editingIndex = null;
+}
+
+function hideAddContact() {
+    document.getElementById('contactFormCard').style.display = 'none';
+}
+
+function saveContact() {
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const notes = document.getElementById('contactNotes').value.trim();
+
+    if (!name || !email) {
+        alert('Name and Email are required.');
+        return;
+    }
+
+    let contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
+    if (editingIndex !== null) {
+        contacts[editingIndex] = {name, email, notes};
+    } else {
+        contacts.push({name, email, notes});
+    }
+
+    localStorage.setItem('crmContacts', JSON.stringify(contacts));
+    hideAddContact();
+    loadContacts();
+}
+
+function editContact(index) {
+    const contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
+    const contact = contacts[index];
+    document.getElementById('contactFormCard').style.display = 'flex';
+    document.getElementById('contactName').value = contact.name;
+    document.getElementById('contactEmail').value = contact.email;
+    document.getElementById('contactNotes').value = contact.notes;
+    editingIndex = index;
+}
+
+// Initial load
+loadContacts();
+</script>
+
+</body>
+</html>
