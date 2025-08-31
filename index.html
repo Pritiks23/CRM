@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -90,6 +90,234 @@ function loadContacts() {
             </div>
         `;
         list.appendChild(div);
+    });
+}
+
+function saveContact() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const notes = document.getElementById('notes').value.trim();
+
+    if (!name || !email) { alert('Name and Email required'); return; }
+
+    let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    const contact = {name, email, notes};
+
+    if (editingIndex !== null) {
+        contacts[editingIndex] = contact;
+    } else {
+        contacts.push(contact);
+    }
+
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+    resetForm();
+    loadContacts();
+}
+
+function editContact(index) {
+    const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    const contact = contacts[index];
+    document.getElementById('name').value = contact.name;
+    document.getElementById('email').value = contact.email;
+    document.getElementById('notes').value = contact.notes;
+    editingIndex = index;
+}
+
+function deleteContact(index) {
+    let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    contacts.splice(index, 1);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+    loadContacts();
+}
+
+function resetForm() {
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('notes').value = '';
+    editingIndex = null;
+}
+
+// Initial load
+loadContacts();
+</script>
+
+</body>
+</html>
+ -->
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apple-Style CRM</title>
+<style>
+/* Apple-style font and background */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+}
+
+/* Header with logo */
+header {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+header img {
+    width: 40px;
+    margin-right: 15px;
+}
+header h1 {
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+/* Main container */
+main {
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px;
+}
+
+/* Intro section */
+.intro {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+.intro img {
+    width: 200px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.intro div {
+    flex: 1;
+}
+.intro h2 { font-weight: 700; margin-bottom: 15px; }
+.intro p { font-size: 1.05rem; line-height: 1.6; }
+
+/* Contact form */
+#formDiv input, #formDiv textarea, #formDiv button {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1px solid #d1d1d6;
+    font-size: 1rem;
+}
+#formDiv button {
+    width: auto;
+    background: #0071e3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+#formDiv button.cancel { background:#aaa; }
+
+/* Contacts table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+th { background: #f0f0f5; }
+tr:nth-child(even) { background: #f9f9fb; }
+tr:hover { background: #e6f0ff; }
+button.delete { background:#e30000; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; }
+
+/* Footer / extra content */
+section {
+    margin-top: 50px;
+}
+section img {
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body>
+
+<header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Logo">
+    <h1>CRM Dashboard</h1>
+</header>
+
+<main>
+
+<!-- Intro Section -->
+<div class="intro">
+    <img src="https://via.placeholder.com/200x200.png?text=CRM+Image" alt="CRM Illustration">
+    <div>
+        <h2>Welcome to Your CRM</h2>
+        <p>This Apple-style CRM allows you to efficiently manage your contacts. Add, edit, and remove contacts easily. All data is stored locally in your browser, meaning it's fast and secure. Each contact can include notes, email, and more information.</p>
+    </div>
+</div>
+
+<!-- Contact Form -->
+<div id="formDiv">
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <textarea id="notes" placeholder="Notes"></textarea>
+    <button onclick="saveContact()">Save</button>
+    <button class="cancel" onclick="resetForm()">Cancel</button>
+</div>
+
+<!-- Contacts Table -->
+<h2>Contacts</h2>
+<table id="contactsTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Notes</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<!-- Extra Section -->
+<section>
+    <h2>About This CRM</h2>
+    <p>This CRM is designed with simplicity and elegance in mind. Inspired by Apple's clean design, it features smooth shadows, rounded elements, and clear typography. You can expand it with analytics, images, and more features as your business grows.</p>
+    <img src="https://via.placeholder.com/800x400.png?text=CRM+Dashboard+Screenshot" alt="Dashboard Screenshot">
+</section>
+
+<script>
+let editingIndex = null;
+
+function loadContacts() {
+    const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    const tbody = document.querySelector('#contactsTable tbody');
+    tbody.innerHTML = '';
+    contacts.forEach((c, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${c.name}</td>
+            <td>${c.email}</td>
+            <td>${c.notes || ''}</td>
+            <td><button class="delete" onclick="deleteContact(${i})">Delete</button></td>
+        `;
+        tr.onclick = () => editContact(i);
+        tbody.appendChild(tr);
     });
 }
 
