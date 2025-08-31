@@ -3,205 +3,143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Professional CRM Dashboard</title>
+<title>Simple CRM</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: Arial, sans-serif;
     background: #f5f5f7;
-    color: #1d1d1f;
-    display: flex;
-    min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
-
-/* Sidebar */
-nav {
-    width: 260px;
-    background: linear-gradient(180deg, #0071e3, #005bb5);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 30px 20px;
-}
-nav h1 {
-    font-weight: 700;
-    font-size: 1.8rem;
-    margin-bottom: 40px;
-}
-nav button {
-    background: #fff;
-    color: #0071e3;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: all 0.2s;
-}
-nav button:hover { background: #e6e6e6; }
-nav input {
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    font-size: 1rem;
-    margin-bottom: 20px;
-}
-
-/* Main Content */
-main {
-    flex: 1;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-/* Card Style */
-.card {
-    background: #fff;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-/* Contact Form */
-#contactFormCard input, #contactFormCard textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid #d1d1d6;
-    font-size: 1rem;
-    margin-bottom: 12px;
-}
-#contactFormCard button {
+header {
     background: #0071e3;
     color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    margin-right: 10px;
-}
-#contactFormCard button.cancel { background:#aaa; }
-
-/* Contacts List */
-.contacts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-height: 450px;
-    overflow-y: auto;
-}
-.contact-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 18px;
-    border-radius: 16px;
-    background: linear-gradient(90deg, #f0f4ff, #e6ebff);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.contact-item:hover { background: linear-gradient(90deg, #d9e2ff, #c2d1ff); }
-.contact-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.contact-info img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-.contact-info div span { font-weight: 600; display:block; }
-.contact-actions button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 1rem;
-    color: #0071e3;
-}
-.contact-actions button:hover { color: #005bb5; }
-
-/* Analytics */
-.analytics {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-.analytics .stat {
-    flex: 1 1 200px;
     padding: 20px;
-    background: linear-gradient(135deg,#0071e3,#00aaff);
-    border-radius: 20px;
     text-align: center;
-    color: white;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
-.analytics .stat h2 { margin: 0 0 10px; font-size: 2rem; }
-.analytics .stat p { margin: 0; color: #f0f0f0; }
+main {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+button.save { background: #0071e3; color: white; }
+button.cancel { background: #aaa; color: white; }
+button.delete { background: #e30000; color: white; }
 
-/* Recent Activity */
-.activity-list {
-    max-height: 200px;
-    overflow-y: auto;
+.contact-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 10px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.activity-item {
-    padding: 12px 18px;
-    border-radius: 14px;
-    background: #f0f0f5;
-    font-size: 0.95rem;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-    body { flex-direction: column; }
-    nav { width: 100%; flex-direction: row; overflow-x: auto; }
-    nav input { flex: 1; margin-right: 10px; }
-    main { padding: 20px; }
+    justify-content: space-between;
+    align-items: center;
 }
 </style>
 </head>
 <body>
 
-<nav>
-    <h1>CRM</h1>
-    <button onclick="showAddContact()">+ Add Contact</button>
-    <input type="text" id="searchInput" placeholder="Search contacts..." oninput="searchContacts()">
-</nav>
+<header>
+    <h1>Simple CRM</h1>
+</header>
 
 <main>
-    <!-- Contact Form -->
-    <div class="card" id="contactFormCard" style="display:none;">
-        <h2>Add / Edit Contact</h2>
-        <input type="text" id="contactName" placeholder="Full Name">
-        <input type="email" id="contactEmail" placeholder="Email">
-        <textarea id="contactNotes" placeholder="Notes"></textarea>
-        <button onclick="saveContact()">Save</button>
-        <button class="cancel" onclick="hideAddContact()">Cancel</button>
+    <div id="formDiv">
+        <input type="text" id="name" placeholder="Full Name">
+        <input type="email" id="email" placeholder="Email">
+        <textarea id="notes" placeholder="Notes"></textarea>
+        <button class="save" onclick="saveContact()">Save</button>
+        <button class="cancel" onclick="resetForm()">Cancel</button>
     </div>
 
-    <!-- Analytics -->
-    <div class="card analytics">
-        <div class="stat">
-            <h2 id="totalContacts">0</h2>
-            <p>Total Contacts</p>
-        </div>
-        <div class="stat">
-            <h2 id="recentContact">—</h2>
-            <p>Most Recent Contact</p>
-        </div>
-    </div>
+    <h2>Contacts</h2>
+    <div id="contactsList"></div>
+</main>
 
-    <!-- Contacts List -->
-    <div class="card">
-        <h2>Contacts</h2>
+<script>
+let editingIndex = null;
 
+function loadContacts() {
+    const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    const list = document.getElementById('contactsList');
+    list.innerHTML = '';
+    contacts.forEach((c, i) => {
+        const div = document.createElement('div');
+        div.className = 'contact-item';
+        div.innerHTML = `
+            <div>
+                <strong>${c.name}</strong><br>${c.email}<br>${c.notes || ''}
+            </div>
+            <div>
+                <button onclick="editContact(${i})">Edit</button>
+                <button class="delete" onclick="deleteContact(${i})">Delete</button>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+function saveContact() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const notes = document.getElementById('notes').value.trim();
+
+    if (!name || !email) { alert('Name and Email required'); return; }
+
+    let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    const contact = {name, email, notes};
+
+    if (editingIndex !== null) {
+        contacts[editingIndex] = contact;
+    } else {
+        contacts.push(contact);
+    }
+
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+    resetForm();
+    loadContacts();
+}
+
+function editContact(index) {
+    const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    const contact = contacts[index];
+    document.getElementById('name').value = contact.name;
+    document.getElementById('email').value = contact.email;
+    document.getElementById('notes').value = contact.notes;
+    editingIndex = index;
+}
+
+function deleteContact(index) {
+    let contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+    contacts.splice(index, 1);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+    loadContacts();
+}
+
+function resetForm() {
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('notes').value = '';
+    editingIndex = null;
+}
+
+// Initial load
+loadContacts();
+</script>
+
+</body>
+</html>
