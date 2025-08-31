@@ -5,145 +5,169 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Professional CRM Dashboard</title>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    body {
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-        background: #f5f5f7;
-        color: #1d1d1f;
-        display: flex;
-        min-height: 100vh;
-    }
-    /* Sidebar */
-    nav {
-        width: 250px;
-        background: #fff;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-        display: flex;
-        flex-direction: column;
-        padding: 30px 20px;
-    }
-    nav h1 {
-        font-weight: 700;
-        font-size: 1.6rem;
-        margin-bottom: 40px;
-    }
-    nav button {
-        background: #0071e3;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 10px;
-        font-weight: 600;
-        cursor: pointer;
-        margin-bottom: 20px;
-        transition: background 0.2s;
-    }
-    nav button:hover { background: #005bb5; }
-    nav input {
-        padding: 10px;
-        border-radius: 10px;
-        border: 1px solid #d1d1d6;
-        margin-bottom: 20px;
-        font-size: 1rem;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-    /* Main Content */
-    main {
-        flex: 1;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-    }
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    display: flex;
+    min-height: 100vh;
+}
 
-    .card {
-        background: #fff;
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    }
+/* Sidebar */
+nav {
+    width: 260px;
+    background: linear-gradient(180deg, #0071e3, #005bb5);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+}
+nav h1 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+}
+nav button {
+    background: #fff;
+    color: #0071e3;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+}
+nav button:hover { background: #e6e6e6; }
+nav input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
 
-    /* Contact Form */
-    #contactFormCard input, #contactFormCard textarea {
-        width: 100%;
-        padding: 10px;
-        border-radius: 10px;
-        border: 1px solid #d1d1d6;
-        font-size: 1rem;
-        margin-bottom: 10px;
-    }
-    #contactFormCard button {
-        background: #0071e3;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        margin-right: 10px;
-    }
-    #contactFormCard button.cancel { background:#aaa; }
+/* Main Content */
+main {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
 
-    /* Contacts List */
-    .contacts-list {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        max-height: 400px;
-        overflow-y: auto;
-    }
-    .contact-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 18px;
-        border-radius: 14px;
-        background: #f0f0f5;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .contact-item:hover { background: #e0e0e5; }
-    .contact-item span { font-weight: 500; }
+/* Card Style */
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
 
-    /* Analytics */
-    .analytics {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
-    .analytics .stat {
-        flex: 1 1 200px;
-        padding: 20px;
-        background: #fff;
-        border-radius: 20px;
-        text-align: center;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.06);
-    }
-    .analytics .stat h2 { margin: 0 0 10px; font-size: 2rem; }
-    .analytics .stat p { margin: 0; color: #555; }
+/* Contact Form */
+#contactFormCard input, #contactFormCard textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #d1d1d6;
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+#contactFormCard button {
+    background: #0071e3;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 10px;
+}
+#contactFormCard button.cancel { background:#aaa; }
 
-    /* Recent Activity */
-    .activity-list {
-        max-height: 200px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .activity-item {
-        padding: 10px 15px;
-        border-radius: 12px;
-        background: #f0f0f5;
-        font-size: 0.95rem;
-    }
+/* Contacts List */
+.contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+.contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-radius: 16px;
+    background: linear-gradient(90deg, #f0f4ff, #e6ebff);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.contact-item:hover { background: linear-gradient(90deg, #d9e2ff, #c2d1ff); }
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.contact-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.contact-info div span { font-weight: 600; display:block; }
+.contact-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 1rem;
+    color: #0071e3;
+}
+.contact-actions button:hover { color: #005bb5; }
 
-    /* Responsive */
-    @media (max-width: 900px) {
-        body { flex-direction: column; }
-        nav { width: 100%; flex-direction: row; overflow-x: auto; }
-        nav input { flex: 1; margin-right: 10px; }
-        main { padding: 20px; }
-    }
+/* Analytics */
+.analytics {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.analytics .stat {
+    flex: 1 1 200px;
+    padding: 20px;
+    background: linear-gradient(135deg,#0071e3,#00aaff);
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.analytics .stat h2 { margin: 0 0 10px; font-size: 2rem; }
+.analytics .stat p { margin: 0; color: #f0f0f0; }
+
+/* Recent Activity */
+.activity-list {
+    max-height: 200px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.activity-item {
+    padding: 12px 18px;
+    border-radius: 14px;
+    background: #f0f0f5;
+    font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    body { flex-direction: column; }
+    nav { width: 100%; flex-direction: row; overflow-x: auto; }
+    nav input { flex: 1; margin-right: 10px; }
+    main { padding: 20px; }
+}
 </style>
 </head>
 <body>
@@ -180,106 +204,4 @@
     <!-- Contacts List -->
     <div class="card">
         <h2>Contacts</h2>
-        <div class="contacts-list" id="contactsList"></div>
-    </div>
-
-    <!-- Recent Activity -->
-    <div class="card">
-        <h2>Recent Activity</h2>
-        <div class="activity-list" id="activityList"></div>
-    </div>
-</main>
-
-<script>
-let editingIndex = null;
-
-function loadContacts() {
-    let contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
-    const list = document.getElementById('contactsList');
-    list.innerHTML = '';
-    const search = document.getElementById('searchInput').value.toLowerCase();
-
-    contacts.forEach((c, i) => {
-        if (!c.name.toLowerCase().includes(search) && !c.email.toLowerCase().includes(search)) return;
-        const item = document.createElement('div');
-        item.className = 'contact-item';
-        item.innerHTML = `<span>${c.name}</span> | <span>${c.email}</span>`;
-        item.onclick = () => editContact(i);
-        list.appendChild(item);
-    });
-
-    updateAnalytics(contacts);
-    loadActivity(contacts);
-}
-
-function showAddContact() {
-    document.getElementById('contactFormCard').style.display = 'flex';
-    document.getElementById('contactName').value = '';
-    document.getElementById('contactEmail').value = '';
-    document.getElementById('contactNotes').value = '';
-    editingIndex = null;
-}
-
-function hideAddContact() {
-    document.getElementById('contactFormCard').style.display = 'none';
-}
-
-function saveContact() {
-    const name = document.getElementById('contactName').value.trim();
-    const email = document.getElementById('contactEmail').value.trim();
-    const notes = document.getElementById('contactNotes').value.trim();
-    if (!name || !email) { alert('Name and Email are required.'); return; }
-
-    let contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
-    const timestamp = new Date().toLocaleString();
-    if (editingIndex !== null) {
-        contacts[editingIndex] = {name, email, notes, lastEdited: timestamp};
-    } else {
-        contacts.push({name, email, notes, lastEdited: timestamp});
-    }
-
-    localStorage.setItem('crmContacts', JSON.stringify(contacts));
-    hideAddContact();
-    loadContacts();
-}
-
-function editContact(index) {
-    const contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
-    const contact = contacts[index];
-    document.getElementById('contactFormCard').style.display = 'flex';
-    document.getElementById('contactName').value = contact.name;
-    document.getElementById('contactEmail').value = contact.email;
-    document.getElementById('contactNotes').value = contact.notes;
-    editingIndex = index;
-}
-
-function searchContacts() { loadContacts(); }
-
-function updateAnalytics(contacts) {
-    document.getElementById('totalContacts').innerText = contacts.length;
-    if (contacts.length > 0) {
-        const recent = contacts[contacts.length-1].name;
-        document.getElementById('recentContact').innerText = recent;
-    } else {
-        document.getElementById('recentContact').innerText = '—';
-    }
-}
-
-function loadActivity(contacts) {
-    const list = document.getElementById('activityList');
-    list.innerHTML = '';
-    contacts.slice(-5).reverse().forEach(c => {
-        const item = document.createElement('div');
-        item.className = 'activity-item';
-        item.innerText = `${c.name} (${c.email}) updated on ${c.lastEdited || 'N/A'}`;
-        list.appendChild(item);
-    });
-}
-
-// Initial load
-loadContacts();
-</script>
-
-</body>
-</html>
 
