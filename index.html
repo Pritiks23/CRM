@@ -3,119 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Professional CRM</title>
+<title>Professional CRM Dashboard</title>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
     body {
         margin: 0;
         font-family: 'Inter', sans-serif;
         background: #f5f5f7;
         color: #1d1d1f;
-    }
-    header {
-        background: #fff;
-        padding: 20px 40px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        z-index: 10;
+        min-height: 100vh;
     }
-    header h1 {
-        margin: 0;
-        font-weight: 600;
-        font-size: 1.5rem;
+    /* Sidebar */
+    nav {
+        width: 250px;
+        background: #fff;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        padding: 30px 20px;
     }
-    header button {
+    nav h1 {
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin-bottom: 40px;
+    }
+    nav button {
         background: #0071e3;
         color: white;
         border: none;
-        padding: 10px 18px;
-        border-radius: 8px;
-        cursor: pointer;
+        padding: 12px 20px;
+        border-radius: 10px;
         font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 20px;
+        transition: background 0.2s;
     }
+    nav button:hover { background: #005bb5; }
+    nav input {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #d1d1d6;
+        margin-bottom: 20px;
+        font-size: 1rem;
+    }
+
+    /* Main Content */
     main {
-        padding: 40px;
+        flex: 1;
+        padding: 30px;
         display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 30px;
     }
+
     .card {
         background: #fff;
         padding: 20px;
         border-radius: 20px;
         box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        flex: 1 1 300px;
-        min-width: 280px;
-        max-width: 400px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
     }
-    .card input, .card textarea {
+
+    /* Contact Form */
+    #contactFormCard input, #contactFormCard textarea {
         width: 100%;
         padding: 10px;
         border-radius: 10px;
         border: 1px solid #d1d1d6;
         font-size: 1rem;
-        font-family: 'Inter', sans-serif;
+        margin-bottom: 10px;
     }
-    .card button {
+    #contactFormCard button {
         background: #0071e3;
         color: white;
         border: none;
-        padding: 10px;
+        padding: 10px 20px;
         border-radius: 8px;
         cursor: pointer;
         font-weight: 600;
+        margin-right: 10px;
     }
+    #contactFormCard button.cancel { background:#aaa; }
+
+    /* Contacts List */
     .contacts-list {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
+        max-height: 400px;
+        overflow-y: auto;
     }
     .contact-item {
         display: flex;
         justify-content: space-between;
-        padding: 10px 15px;
-        border-radius: 12px;
+        padding: 12px 18px;
+        border-radius: 14px;
         background: #f0f0f5;
         cursor: pointer;
         transition: background 0.2s;
     }
-    .contact-item:hover {
-        background: #e0e0e5;
+    .contact-item:hover { background: #e0e0e5; }
+    .contact-item span { font-weight: 500; }
+
+    /* Analytics */
+    .analytics {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
     }
-    .contact-item span {
-        font-weight: 500;
+    .analytics .stat {
+        flex: 1 1 200px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+    }
+    .analytics .stat h2 { margin: 0 0 10px; font-size: 2rem; }
+    .analytics .stat p { margin: 0; color: #555; }
+
+    /* Recent Activity */
+    .activity-list {
+        max-height: 200px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .activity-item {
+        padding: 10px 15px;
+        border-radius: 12px;
+        background: #f0f0f5;
+        font-size: 0.95rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        body { flex-direction: column; }
+        nav { width: 100%; flex-direction: row; overflow-x: auto; }
+        nav input { flex: 1; margin-right: 10px; }
+        main { padding: 20px; }
     }
 </style>
 </head>
 <body>
 
-<header>
-    <h1>CRM Dashboard</h1>
+<nav>
+    <h1>CRM</h1>
     <button onclick="showAddContact()">+ Add Contact</button>
-</header>
+    <input type="text" id="searchInput" placeholder="Search contacts..." oninput="searchContacts()">
+</nav>
 
 <main>
+    <!-- Contact Form -->
     <div class="card" id="contactFormCard" style="display:none;">
         <h2>Add / Edit Contact</h2>
         <input type="text" id="contactName" placeholder="Full Name">
         <input type="email" id="contactEmail" placeholder="Email">
         <textarea id="contactNotes" placeholder="Notes"></textarea>
-        <button onclick="saveContact()">Save Contact</button>
-        <button style="background:#aaa;margin-top:5px;" onclick="hideAddContact()">Cancel</button>
+        <button onclick="saveContact()">Save</button>
+        <button class="cancel" onclick="hideAddContact()">Cancel</button>
     </div>
 
+    <!-- Analytics -->
+    <div class="card analytics">
+        <div class="stat">
+            <h2 id="totalContacts">0</h2>
+            <p>Total Contacts</p>
+        </div>
+        <div class="stat">
+            <h2 id="recentContact">—</h2>
+            <p>Most Recent Contact</p>
+        </div>
+    </div>
+
+    <!-- Contacts List -->
     <div class="card">
         <h2>Contacts</h2>
-        <div class="contacts-list" id="contactsList">
-            <!-- Contacts will populate here -->
-        </div>
+        <div class="contacts-list" id="contactsList"></div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card">
+        <h2>Recent Activity</h2>
+        <div class="activity-list" id="activityList"></div>
     </div>
 </main>
 
@@ -123,16 +194,22 @@
 let editingIndex = null;
 
 function loadContacts() {
-    const contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
+    let contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
     const list = document.getElementById('contactsList');
     list.innerHTML = '';
+    const search = document.getElementById('searchInput').value.toLowerCase();
+
     contacts.forEach((c, i) => {
+        if (!c.name.toLowerCase().includes(search) && !c.email.toLowerCase().includes(search)) return;
         const item = document.createElement('div');
         item.className = 'contact-item';
         item.innerHTML = `<span>${c.name}</span> | <span>${c.email}</span>`;
         item.onclick = () => editContact(i);
         list.appendChild(item);
     });
+
+    updateAnalytics(contacts);
+    loadActivity(contacts);
 }
 
 function showAddContact() {
@@ -151,17 +228,14 @@ function saveContact() {
     const name = document.getElementById('contactName').value.trim();
     const email = document.getElementById('contactEmail').value.trim();
     const notes = document.getElementById('contactNotes').value.trim();
-
-    if (!name || !email) {
-        alert('Name and Email are required.');
-        return;
-    }
+    if (!name || !email) { alert('Name and Email are required.'); return; }
 
     let contacts = JSON.parse(localStorage.getItem('crmContacts') || '[]');
+    const timestamp = new Date().toLocaleString();
     if (editingIndex !== null) {
-        contacts[editingIndex] = {name, email, notes};
+        contacts[editingIndex] = {name, email, notes, lastEdited: timestamp};
     } else {
-        contacts.push({name, email, notes});
+        contacts.push({name, email, notes, lastEdited: timestamp});
     }
 
     localStorage.setItem('crmContacts', JSON.stringify(contacts));
@@ -179,9 +253,33 @@ function editContact(index) {
     editingIndex = index;
 }
 
+function searchContacts() { loadContacts(); }
+
+function updateAnalytics(contacts) {
+    document.getElementById('totalContacts').innerText = contacts.length;
+    if (contacts.length > 0) {
+        const recent = contacts[contacts.length-1].name;
+        document.getElementById('recentContact').innerText = recent;
+    } else {
+        document.getElementById('recentContact').innerText = '—';
+    }
+}
+
+function loadActivity(contacts) {
+    const list = document.getElementById('activityList');
+    list.innerHTML = '';
+    contacts.slice(-5).reverse().forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'activity-item';
+        item.innerText = `${c.name} (${c.email}) updated on ${c.lastEdited || 'N/A'}`;
+        list.appendChild(item);
+    });
+}
+
 // Initial load
 loadContacts();
 </script>
 
 </body>
 </html>
+
